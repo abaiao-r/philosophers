@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: andrefrancisco <andrefrancisco@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 15:17:25 by codespace         #+#    #+#             */
-/*   Updated: 2023/06/12 17:20:21 by codespace        ###   ########.fr       */
+/*   Updated: 2023/06/14 21:09:59 by andrefranci      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,55 +83,6 @@ void	*ft_calloc(size_t nmemb, size_t size)
 	return (ptr);
 }
 
-int ft_isdigit(char c)
-{
-	if (c >= '0' && c <= '9')
-		return (1);
-	else
-		return (0);
-}
-
-int arg_check(int ac, char ** av)
-{
-    int i;
-    int j;
-    
-    if (ac < 5 || ac > 6)
-    {
-        printf("Usage: %s number_of_philosophers time_to_die time_to_eat time_to_sleep [number_of_times_each_philosopher_must_eat]\n", av[0]);
-        return (0);
-    }
-    
-    i = 0;
-    while(av[i])
-    {
-        j = 0;
-        while (av[i][j])
-        {
-            if (j == 0)
-            {
-                if(av[i][j] == '-')
-                {
-                    printf("Usage: arguments can not be negative number\n");
-                    return(0);
-                }
-            }
-            if(!ft_isdigit(av[i][j]))
-            {
-                printf("Usage: one of the arguments is not a digit\n");
-                return(0);
-            }
-            if (j == 11)
-            {
-                printf("Usage: arguments can not be bigger than an int\n");
-                return(0);   
-            }
-            j++;
-        }
-        i++;
-    }
-    return (1);
-}
 
 int main(int ac, char **av)
 {

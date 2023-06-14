@@ -1,37 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   philo.h                                            :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: andrefrancisco <andrefrancisco@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/12 14:12:41 by codespace         #+#    #+#             */
-/*   Updated: 2023/06/14 21:08:59 by andrefranci      ###   ########.fr       */
+/*   Created: 2023/06/14 21:07:08 by andrefranci       #+#    #+#             */
+/*   Updated: 2023/06/14 21:07:55 by andrefranci      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PHILO_H
-# define PHILO_H
+#include "../includes/philo.h"
 
-# include "philo.h"
-# include <stdio.h>
-# include <stdlib.h>
-# include <unistd.h>
-
-typedef struct s_philo
+int	ft_isdigit(char c)
 {
-	int	num_philos;
-	int	time_to_die;
-	int	time_to_eat;
-	int	time_to_sleep;
-	int	num_meals;
-	int	philo_id;
-}		t_philo;
-
-/* arg_check */
-int		arg_check(int ac, char **av);
-
-/* utils.c */
-int		ft_isdigit(char c);
-
-#endif
+	if (c >= '0' && c <= '9')
+		return (1);
+	else
+		return (0);
+}
