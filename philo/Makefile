@@ -6,7 +6,7 @@
 #    By: andrefrancisco <andrefrancisco@student.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/12 14:04:06 by codespace         #+#    #+#              #
-#    Updated: 2023/06/14 21:09:16 by andrefranci      ###   ########.fr        #
+#    Updated: 2023/06/14 22:26:35 by andrefranci      ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,6 +22,7 @@ OBJDIR = ./objs
 
 SRCS = 	$(SRCDIR)/main.c \
 		$(SRCDIR)/arg_check.c \
+		$(SRCDIR)/philo_data.c \
 		$(SRCDIR)/utils.c \
 
 
@@ -51,7 +52,7 @@ gdb:	all
 		gdb $(NAME)
 
 valgrind: 	all
-			valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes ./$(NAME)
+			valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --tool=drd --tool=helgrind ./$(NAME)
 
 $(NAME): 	$(OBJS)
 			$(CC) $(OBJS) $(CFLAGS) -pthread -o  $(NAME) 
