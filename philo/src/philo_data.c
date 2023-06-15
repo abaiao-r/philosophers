@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo_data.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: andrefrancisco <andrefrancisco@student.    +#+  +:+       +#+        */
+/*   By: abaiao-r <abaiao-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 21:57:45 by andrefranci       #+#    #+#             */
-/*   Updated: 2023/06/14 22:01:07 by andrefranci      ###   ########.fr       */
+/*   Updated: 2023/06/15 18:37:47 by abaiao-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,5 +25,8 @@ t_philo	*init_philo_data(int ac, char **av)
 		philo->num_meals = ft_atol(av[5]);
 	else
 		philo->num_meals = -1;
+	philo->forks = malloc(sizeof(pthread_mutex_t) * philo->num_philos);
+	philo->philosopher_mutexes = malloc(sizeof(pthread_mutex_t) * philo->num_philos);
+	gettimeofday(&philo->start_time, NULL);
 	return (philo);
 }
