@@ -6,7 +6,7 @@
 #    By: abaiao-r <abaiao-r@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/12 14:04:06 by codespace         #+#    #+#              #
-#    Updated: 2023/06/15 21:04:24 by abaiao-r         ###   ########.fr        #
+#    Updated: 2023/06/15 21:37:08 by abaiao-r         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,9 @@ OBJDIR = ./objs
 
 SRCS = 	$(SRCDIR)/main.c \
 		$(SRCDIR)/arg_check.c \
+		$(SRCDIR)/free_resources.c \
 		$(SRCDIR)/philo_data.c \
+		$(SRCDIR)/routine.c \
 		$(SRCDIR)/utils.c \
 
 

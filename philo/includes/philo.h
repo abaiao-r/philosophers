@@ -6,7 +6,7 @@
 /*   By: abaiao-r <abaiao-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 14:12:41 by codespace         #+#    #+#             */
-/*   Updated: 2023/06/15 21:05:36 by abaiao-r         ###   ########.fr       */
+/*   Updated: 2023/06/15 21:31:55 by abaiao-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,21 +35,6 @@ typedef struct s_philo
 	struct timeval	start_time;
 }					t_philo;
 
-void cleanup(t_philo *philo, pthread_t *philosophers);
-t_philo *init_philo_data(int ac, char **av);
-long get_timestamp(t_philo *philo);
-void pick_up_forks(t_philo *philo, int left_fork, int right_fork);
-void put_down_forks(t_philo *philo, int left_fork, int right_fork);
-void *philosopher(void *arg);
-void destroy_mutexes(pthread_mutex_t *mutexes, int num_mutexes);
-int create_mutexes(pthread_mutex_t *mutexes, int num_mutexes);
-int create_philosophers(pthread_t *philosophers, t_philo *philo);
-void destroy_forks(pthread_mutex_t *forks, int num_forks);
-int create_forks(pthread_mutex_t *forks, int num_forks);
-void check_deadlock(t_philo *philo);
-void display_status(t_philo *philo);
-int check_meals_completed(t_philo *philo);
-void update_timestamp(t_philo *philo);
 
 /* arg_check.c */
 int					arg_check(int ac, char **av);
