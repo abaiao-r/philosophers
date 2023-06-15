@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   arg_check.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: andrefrancisco <andrefrancisco@student.    +#+  +:+       +#+        */
+/*   By: abaiao-r <abaiao-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 20:50:01 by andrefranci       #+#    #+#             */
-/*   Updated: 2023/06/14 21:10:58 by andrefranci      ###   ########.fr       */
+/*   Updated: 2023/06/15 17:16:25 by abaiao-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@ static int	ac_check(int ac, char **av)
 {
 	if (ac < 5 || ac > 6)
 	{
-		printf("Usage: %s number_of_philosophers time_to_die \
-time_to_eat time_to_sleep \
+		printf("Usage: %s [number_of_philosophers] [time_to_die] \
+[time_to_eat time_to_sleep] \
 [number_of_times_each_philosopher_must_eat]\n", av[0]);
 		return (0);
 	}
