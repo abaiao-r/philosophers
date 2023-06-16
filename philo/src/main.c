@@ -3,24 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abaiao-r <abaiao-r@student.42.fr>          +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 15:17:25 by codespace         #+#    #+#             */
-/*   Updated: 2023/06/15 21:16:37 by abaiao-r         ###   ########.fr       */
+/*   Updated: 2023/06/16 01:51:05 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
-
-void	cleanup(t_philo *philo, pthread_t *philosophers)
-{
-	destroy_mutexes(philo->forks, philo->num_philos);
-	destroy_mutexes(philo->philosopher_mutexes, philo->num_philos);
-	free(philosophers);
-	free(philo->forks);
-	free(philo->philosopher_mutexes);
-	free(philo);
-}
 
 long	get_timestamp(t_philo *philo)
 {
@@ -65,6 +55,13 @@ void	put_down_forks(t_philo *philo, int left_fork, int right_fork)
 void	*philosopher(void *arg)
 {
 	t_philo	*philo;
+	
+	philo = (t_philo *)arg;
+	
+	printf("philosopher[%d] was born!\n", philo->philo_id);
+	sleep(3);
+	printf("Thread[%i] has ended!\n", philo->philo_id);
+	/*t_philo	*philo;
 	int		left_fork;
 	int		right_fork;
 	int		meals_eaten;
@@ -107,7 +104,7 @@ void	*philosopher(void *arg)
 			printf("%ld %d died\n", get_timestamp(philo), philo->philo_id);
 			break ; // Exit the loop since the philosopher has died
 		}
-	}
+	}*/
 	return (NULL);
 }
 void	destroy_mutexes(pthread_mutex_t *mutexes, int num_mutexes)
@@ -203,13 +200,13 @@ int	main(int ac, char **av)
 		cleanup(philo, philosophers);
 		return (1);
 	}
-	if (!create_mutexes(philo->forks, philo->num_philos)
+	/*if (!create_mutexes(philo->forks, philo->num_philos)
 		|| !create_mutexes(philo->philosopher_mutexes, philo->num_philos))
 	{
 		printf("Failed to initialize mutexes.\n");
 		cleanup(philo, philosophers);
 		return (1);
-	}
+	}*/
 	if (!create_philosophers(philosophers, philo))
 	{
 		printf("Failed to create philosopher threads.\n");
