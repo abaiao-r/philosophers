@@ -6,7 +6,7 @@
 /*   By: abaiao-r <abaiao-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 21:36:23 by abaiao-r          #+#    #+#             */
-/*   Updated: 2023/06/16 18:14:41 by abaiao-r         ###   ########.fr       */
+/*   Updated: 2023/06/16 19:22:50 by abaiao-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,14 +56,23 @@ void	put_down_forks(t_philo *philo, int left_fork, int right_fork)
 void	*routine(void *arg)
 {
 	t_philo			*philo;
-	size_t			birth_time;
-	size_t			death_time;
+	unsigned long	birth_time;
+	unsigned long	death_time;
 
 	philo = (t_philo *)arg;
 	birth_time = get_timestamp(philo);
 	printf("%ld philosopher[%d] was born!\n", birth_time, philo->philo_id);
 	usleep(5000);
-	death_time = get_timestamp(philo);
-	printf("%ld philospher[%d] has died!\n", death_time, philo->philo_id);
+	while (1)
+	{
+		death_time = get_timestamp(philo);
+		if (death_time - birth_time > philo->time_to_die)
+		{
+			printf("%ld philospher[%d] has died!\n", death_time,
+					philo->philo_id);
+			break ;
+		}
+		usleep(1000);
+	}
 	return (NULL);
 }
