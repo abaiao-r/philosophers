@@ -6,28 +6,11 @@
 /*   By: abaiao-r <abaiao-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 21:57:45 by andrefranci       #+#    #+#             */
-/*   Updated: 2023/06/16 18:34:27 by abaiao-r         ###   ########.fr       */
+/*   Updated: 2023/06/22 16:47:42 by abaiao-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
-
-int	create_mutexes(pthread_mutex_t *mutexes, int num_mutexes)
-{
-	int	i;
-
-	i = 0;
-	while (i < num_mutexes)
-	{
-		if (pthread_mutex_init(&mutexes[i], NULL) != 0)
-		{
-			printf("Error: Failed to initialize mutex\n");
-			return (0);
-		}
-		i++;
-	}
-	return (1);
-}
 
 int	create_forks(pthread_mutex_t *forks, int num_forks)
 {
@@ -41,52 +24,60 @@ int	create_forks(pthread_mutex_t *forks, int num_forks)
 			printf("Error: Failed to initialize fork mutex\n");
 			return (0);
 		}
+		printf("Fork %d initialized\n", i + 1);
 		i++;
 	}
 	return (1);
 }
 
-int	create_philosophers(pthread_t *philosophers, t_philo **philo)
+int	create_philosophers(t_data **data)
 {
 	int	i;
 
 	i = 0;
-	while (i < (*philo)->num_philos)
+	(*data)->start_time = start_watch();
+	while (i < (*data)->num_philos)
 	{
-		gettimeofday(&(*philo)[i].start_time, NULL);
-		(*philo)[i].philo_id = i + 1;
-		(*philo)[i].num_philos = (*philo)->num_philos;
-		(*philo)[i].time_to_die = (*philo)->time_to_die;
-		(*philo)[i].time_to_eat = (*philo)->time_to_eat;
-		(*philo)[i].time_to_sleep = (*philo)->time_to_sleep;
-		(*philo)[i].num_meals = (*philo)->num_meals;
-		if (pthread_create(&philosophers[i], NULL, routine, &(*philo)[i]) != 0)
+		(*data)->philo[i].philo_num = i + 1;
+		(*data)->philo[i].meals_eaten = 0;
+		(*data)->philo[i].last_meal = (*data)->start_time;
+		(*data)->philo[i].data = *data;
+		if (pthread_create(&(*data)->philo[i].philo_id, NULL, routine,
+				&(*data)->philo[i]) != 0)
 		{
 			printf("Error: Failed to create philosopher thread\n");
 			return (0);
 		}
-		i++;
 		usleep(900);
+		printf("%ld philosopher %d created\n", get_timestamp((*data)->start_time),i + 1);
+		i++;
 	}
 	return (1);
 }
-
-t_philo	*init_philo_data(int ac, char **av)
+/* start_watch  */
+time_t	start_watch(void)
 {
-	t_philo	*philo;
+	struct timeval	start_time;
 
-	philo = malloc(sizeof(t_philo));
-	philo->num_philos = ft_atol(av[1]);
-	philo->time_to_die = ft_atol(av[2]);
-	philo->time_to_eat = ft_atol(av[3]);
-	philo->time_to_sleep = ft_atol(av[4]);
+	gettimeofday(&start_time, NULL);
+	return (start_time.tv_sec * 1000 + start_time.tv_usec / 1000);
+}
+
+t_data	*init_data(int ac, char **av)
+{
+	t_data	*data;
+
+	data = malloc(sizeof(t_data));
+	data->num_philos = ft_atol(av[1]);
+	data->time_to_die = ft_atol(av[2]);
+	data->time_to_eat = ft_atol(av[3]);
+	data->time_to_sleep = ft_atol(av[4]);
 	if (ac == 6)
-		philo->num_meals = ft_atol(av[5]);
+		data->num_meals = ft_atol(av[5]);
 	else
-		philo->num_meals = -1;
-	philo->forks = malloc(sizeof(pthread_mutex_t) * philo->num_philos);
-	philo->philosopher_mutexes = malloc(sizeof(pthread_mutex_t)
-			* philo->num_philos);
-	gettimeofday(&philo->start_time, NULL);
-	return (philo);
+		data->num_meals = -1;
+	data->philo = malloc(sizeof(t_philo) * data->num_philos);
+	data->forks = malloc(sizeof(pthread_mutex_t) * data->num_philos);
+	data->start_time = start_watch();
+	return (data);
 }

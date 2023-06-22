@@ -6,7 +6,7 @@
 /*   By: abaiao-r <abaiao-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 15:17:25 by codespace         #+#    #+#             */
-/*   Updated: 2023/06/16 18:32:23 by abaiao-r         ###   ########.fr       */
+/*   Updated: 2023/06/22 16:09:06 by abaiao-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,32 +14,37 @@
 
 int	main(int ac, char **av)
 {
-	t_philo		*philo;
-	pthread_t	*philosophers;
+	t_data		*data;
+	int i;
 
+	data = NULL;
 	if (!arg_check(ac, av))
 		return (0);
-	philo = init_philo_data(ac, av);
-	philosophers = malloc(sizeof(pthread_t) * philo->num_philos);
-	if (!philo || !philosophers)
+	data = init_data(ac, av);
+	if (!data)
 	{
 		printf("Error: Memory allocation failed\n");
-		cleanup(philo, philosophers);
+		cleanup(data);
 		return (1);
 	}
- 	if (!create_mutexes(philo->forks, philo->num_philos)
-		|| !create_mutexes(philo->philosopher_mutexes, philo->num_philos))
+	if (!create_forks(data->forks, data->num_philos))
 	{
 		printf("Failed to initialize mutexes.\n");
-		cleanup(philo, philosophers);
+		cleanup(data);
 		return (1);
 	}
-	if (!create_philosophers(philosophers, &philo))
+	if (!create_philosophers(&data))
 	{
 		printf("Failed to create philosopher threads.\n");
-		cleanup(philo, philosophers);
+		cleanup(data);
 		return (1);
 	}
-	cleanup(philo, philosophers);
+	i = 0;
+	while (i < data->num_philos)
+	{
+		pthread_join((data->philo[i].philo_id), NULL);
+		i++;
+	}
+	cleanup(data);
 	return (0);
 }

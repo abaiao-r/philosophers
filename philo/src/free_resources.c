@@ -6,7 +6,7 @@
 /*   By: abaiao-r <abaiao-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 21:29:58 by abaiao-r          #+#    #+#             */
-/*   Updated: 2023/06/16 16:48:38 by abaiao-r         ###   ########.fr       */
+/*   Updated: 2023/06/21 16:36:18 by abaiao-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,20 +36,16 @@ void	destroy_forks(pthread_mutex_t *forks, int num_forks)
 	}
 }
 
-void	cleanup(t_philo *philo, pthread_t *philosophers)
+void	cleanup(t_data *data)
 {
-	int	i;
-
-	i = 0;
-	while (i < philo->num_philos)
+	if (data)
 	{
-		pthread_join(philosophers[i], NULL);
-		i++;
+		if (data->philo)
+			free(data->philo);
+		if (data->forks)
+			destroy_forks(data->forks, data->num_philos);
+		if (data->message_mutex)
+			destroy_mutexes(data->message_mutex, 1);
+		free(data);
 	}
-/* 	destroy_mutexes(philo->forks, philo->num_philos);
-	destroy_mutexes(philo->philosopher_mutexes, philo->num_philos); */
-	free(philosophers);
-/* 	free(philo->forks);
-	free(philo->philosopher_mutexes); */
-	free(philo);
 }
