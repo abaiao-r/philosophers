@@ -6,7 +6,7 @@
 /*   By: abaiao-r <abaiao-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 21:57:45 by andrefranci       #+#    #+#             */
-/*   Updated: 2023/06/22 16:47:42 by abaiao-r         ###   ########.fr       */
+/*   Updated: 2023/06/22 22:22:20 by abaiao-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,8 @@ int	create_philosophers(t_data **data)
 			printf("Error: Failed to create philosopher thread\n");
 			return (0);
 		}
-		usleep(900);
-		printf("%ld philosopher %d created\n", get_timestamp((*data)->start_time),i + 1);
+		/* wait_for_all_threads(*data); */
+		/* usleep(900); */
 		i++;
 	}
 	return (1);
@@ -78,6 +78,11 @@ t_data	*init_data(int ac, char **av)
 		data->num_meals = -1;
 	data->philo = malloc(sizeof(t_philo) * data->num_philos);
 	data->forks = malloc(sizeof(pthread_mutex_t) * data->num_philos);
+	data->start_mutex = malloc(sizeof(pthread_mutex_t));
+	data->message_mutex = malloc(sizeof(pthread_mutex_t));
+	pthread_mutex_init(data->message_mutex, NULL);
+	pthread_mutex_init(data->start_mutex, NULL);
+	data->threads_ready = 0;
 	data->start_time = start_watch();
 	return (data);
 }

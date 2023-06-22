@@ -6,7 +6,7 @@
 /*   By: abaiao-r <abaiao-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 14:12:41 by codespace         #+#    #+#             */
-/*   Updated: 2023/06/22 16:47:54 by abaiao-r         ###   ########.fr       */
+/*   Updated: 2023/06/22 18:02:48 by abaiao-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,8 @@ typedef struct s_data
 	t_philo			*philo;
 	pthread_mutex_t	*forks;
 	pthread_mutex_t	*message_mutex;
+	pthread_mutex_t *start_mutex;
+	int				threads_ready;
 	time_t			start_time;
 }					t_data;
 
@@ -64,6 +66,7 @@ int					create_philosophers(t_data **data);
 t_data				*init_data(int ac, char **av);
 
 /* routine.c */
+void wait_for_all_threads(t_data *data);
 time_t				get_timestamp(time_t start_time);
 void				*routine(void *arg);
 
