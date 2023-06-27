@@ -6,7 +6,7 @@
 /*   By: abaiao-r <abaiao-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 14:12:41 by codespace         #+#    #+#             */
-/*   Updated: 2023/06/22 18:02:48 by abaiao-r         ###   ########.fr       */
+/*   Updated: 2023/06/27 16:35:23 by abaiao-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,8 @@ typedef struct s_data
 	t_philo			*philo;
 	pthread_mutex_t	*forks;
 	pthread_mutex_t	*message_mutex;
-	pthread_mutex_t *start_mutex;
+	pthread_mutex_t	*start_mutex;
+	pthread_mutex_t	*threads_ready_mutex;
 	int				threads_ready;
 	time_t			start_time;
 }					t_data;
@@ -54,7 +55,7 @@ typedef struct s_data
 int					arg_check(int ac, char **av);
 
 /* free_resources.c */
-void	destroy_mutexes(pthread_mutex_t *mutexes,
+void				destroy_mutexes(pthread_mutex_t *mutexes,
 						int num_mutexes);
 void				destroy_forks(pthread_mutex_t *forks, int num_forks);
 void				cleanup(t_data *data);
@@ -66,11 +67,9 @@ int					create_philosophers(t_data **data);
 t_data				*init_data(int ac, char **av);
 
 /* routine.c */
-void wait_for_all_threads(t_data *data);
+void				wait_for_all_threads(t_data *data);
 time_t				get_timestamp(time_t start_time);
 void				*routine(void *arg);
-
-/* create_philosophers.c */
 
 /* utils.c */
 int					ft_isdigit(char c);
