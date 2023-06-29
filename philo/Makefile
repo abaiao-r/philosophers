@@ -6,13 +6,13 @@
 #    By: abaiao-r <abaiao-r@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/12 14:04:06 by codespace         #+#    #+#              #
-#    Updated: 2023/06/21 15:33:16 by abaiao-r         ###   ########.fr        #
+#    Updated: 2023/06/29 18:25:16 by abaiao-r         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 # Compiler settings
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -g -fsanitize=thread 
+CFLAGS = -Wall -Wextra -Werror -g -fsanitize=thread
 
 # Directories
 SRCDIR = ./src

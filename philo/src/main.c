@@ -6,7 +6,7 @@
 /*   By: abaiao-r <abaiao-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 15:17:25 by codespace         #+#    #+#             */
-/*   Updated: 2023/06/22 16:09:06 by abaiao-r         ###   ########.fr       */
+/*   Updated: 2023/06/29 15:35:18 by abaiao-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,18 @@ int	main(int ac, char **av)
 		cleanup(data);
 		return (1);
 	}
-	if (!create_forks(data->forks, data->num_philos))
+	if (!create_forks(&data))
 	{
 		printf("Failed to initialize mutexes.\n");
 		cleanup(data);
 		return (1);
 	}
+/* 	if (!create_mutexes(&data))
+	{
+		printf("Failed to initialize mutexes.\n");
+		cleanup(data);
+		return (1);
+	} */
 	if (!create_philosophers(&data))
 	{
 		printf("Failed to create philosopher threads.\n");

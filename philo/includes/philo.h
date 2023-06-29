@@ -6,7 +6,7 @@
 /*   By: abaiao-r <abaiao-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 14:12:41 by codespace         #+#    #+#             */
-/*   Updated: 2023/06/27 16:35:23 by abaiao-r         ###   ########.fr       */
+/*   Updated: 2023/06/29 14:53:54 by abaiao-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,12 @@ struct s_data;
 typedef struct s_philo
 {
 	pthread_t		philo_id;
-	int				philo_num;
+	int				philo_id_num;
+	int				meals_eaten;
+	time_t			last_meal;
 	pthread_mutex_t	*left_fork;
 	pthread_mutex_t	*right_fork;
-	int				meals_eaten;
 	pthread_mutex_t	*last_meal_mutex;
-	time_t			last_meal;
 	struct s_data	*data;
 }					t_philo;
 
@@ -45,9 +45,7 @@ typedef struct s_data
 	t_philo			*philo;
 	pthread_mutex_t	*forks;
 	pthread_mutex_t	*message_mutex;
-	pthread_mutex_t	*start_mutex;
-	pthread_mutex_t	*threads_ready_mutex;
-	int				threads_ready;
+	pthread_mutex_t	*death_mutex;
 	time_t			start_time;
 }					t_data;
 
@@ -61,7 +59,9 @@ void				destroy_forks(pthread_mutex_t *forks, int num_forks);
 void				cleanup(t_data *data);
 
 /* philo_data.c */
-int					create_forks(pthread_mutex_t *forks, int num_forks);
+int					create_mutexes(t_data **data);
+int					create_forks(t_data **data);
+void				assign_forks(t_philo *philo);
 time_t				start_watch(void);
 int					create_philosophers(t_data **data);
 t_data				*init_data(int ac, char **av);

@@ -6,7 +6,7 @@
 /*   By: abaiao-r <abaiao-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 21:36:23 by abaiao-r          #+#    #+#             */
-/*   Updated: 2023/06/27 20:05:53 by abaiao-r         ###   ########.fr       */
+/*   Updated: 2023/06/29 18:26:21 by abaiao-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,21 +22,21 @@ time_t get_timestamp(time_t start_time)
 
 int check_life(t_philo *philo)
 {
-	pthread_mutex_lock(philo->data->message_mutex);
-	if (get_timestamp(philo->last_meal) > philo->data->time_to_die)
+	pthread_mutex_lock(philo->data->death_mutex);
+	if (get_timestamp(philo->data->start_time) - philo->last_meal > philo->data->time_to_die)
 	{
-		printf("%ld philosopher %d has died\n", get_timestamp(philo->data->start_time), philo->philo_num);
-		pthread_mutex_unlock(philo->data->message_mutex);
+		printf("%ld philosopher %d has died\n", get_timestamp(philo->data->start_time), philo->philo_id_num);
+		pthread_mutex_unlock(philo->data->death_mutex);
 		return (0);
 	}
-	pthread_mutex_unlock(philo->data->message_mutex);
+	pthread_mutex_unlock(philo->data->death_mutex);
 	return (1);
 }
 
 void print_message(t_philo *philo, char *message)
 {
 	pthread_mutex_lock(philo->data->message_mutex);
-	printf("%ld philosopher %d %s\n", get_timestamp(philo->data->start_time), philo->philo_num, message);
+	printf("%ld philosopher %d %s\n", get_timestamp(philo->data->start_time), philo->philo_id_num, message);
 	pthread_mutex_unlock(philo->data->message_mutex);
 }
 
@@ -55,7 +55,36 @@ void thinking(t_philo *philo)
 	usleep(time_to_think * 1000);
 }
 
+void take_forks(t_philo *philo)
+{
+	pthread_mutex_lock(philo->left_fork);
+	print_message(philo, "has taken a fork");
+	pthread_mutex_lock(philo->right_fork);
+	print_message(philo, "has taken a fork");
+}
+void update_meals(t_philo *philo)
+{
+	pthread_mutex_lock(philo->data->death_mutex);
+	philo->last_meal = get_timestamp(philo->data->start_time);
+	philo->meals_eaten++;
+	pthread_mutex_unlock(philo->data->death_mutex);
 
+}
+
+void eating(t_philo *philo)
+{
+	print_message(philo, "is eating");
+	update_meals(philo);
+	usleep(philo->data->time_to_eat * 1000);
+	pthread_mutex_unlock(philo->left_fork);
+	pthread_mutex_unlock(philo->right_fork);
+}
+
+void sleeping(t_philo *philo)
+{
+	print_message(philo, "is sleeping");
+	usleep(philo->data->time_to_sleep * 1000);
+}
 
 void *routine(void *arg)
 {
@@ -63,29 +92,22 @@ void *routine(void *arg)
 	time_t	wait;
 
 	philo = (t_philo *)arg;
-	printf("%ld philosopher %d was born!\n", get_timestamp(philo->data->start_time), philo->philo_num);
+	printf("%ld philosopher %d was born!\n", get_timestamp(philo->data->start_time), philo->philo_id_num);
 	wait = (philo->data->start_time - start_watch()) * 1000;
 	if (wait > 0)
 		usleep(wait);
+	if (philo->philo_id_num % 2 == 0)
+		usleep(600);
 	while (1)
 	{
-		pthread_mutex_lock(philo->left_fork);
-		print_message(philo, "has taken a fork");
-		pthread_mutex_lock(philo->right_fork);
-		print_message(philo, "has taken a fork");
-		pthread_mutex_lock(philo->last_meal_mutex);
-		philo->last_meal = get_timestamp(philo->data->start_time);
-		pthread_mutex_unlock(philo->last_meal_mutex);
-		print_message(philo, "is eating");
-		usleep(philo->data->time_to_eat * 1000);
-		pthread_mutex_unlock(philo->left_fork);
-		pthread_mutex_unlock(philo->right_fork);
+		take_forks(philo);
+		eating(philo);
+
 		if (philo->data->num_meals != -1 && philo->meals_eaten >= philo->data->num_meals)
 			break;
 		if(!check_life(philo))
 			break;
-		print_message(philo, "is sleeping");
-		usleep(philo->data->time_to_sleep * 1000);
+		sleeping(philo);
 		thinking(philo);
 	}
 	return (NULL);
