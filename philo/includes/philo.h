@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abaiao-r <abaiao-r@student.42.fr>          +#+  +:+       +#+        */
+/*   By: andrefrancisco <andrefrancisco@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 14:12:41 by codespace         #+#    #+#             */
-/*   Updated: 2023/06/29 14:53:54 by abaiao-r         ###   ########.fr       */
+/*   Updated: 2023/07/01 00:56:00 by andrefranci      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ typedef struct s_data
 	time_t			time_to_eat;
 	time_t			time_to_sleep;
 	int				num_meals;
+	int				end_flag;
 	t_philo			*philo;
 	pthread_mutex_t	*forks;
 	pthread_mutex_t	*message_mutex;

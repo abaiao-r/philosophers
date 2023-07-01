@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo_data.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abaiao-r <abaiao-r@student.42.fr>          +#+  +:+       +#+        */
+/*   By: andrefrancisco <andrefrancisco@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 21:57:45 by andrefranci       #+#    #+#             */
-/*   Updated: 2023/06/29 15:42:46 by abaiao-r         ###   ########.fr       */
+/*   Updated: 2023/07/01 00:58:48 by andrefranci      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,6 +120,7 @@ t_data	*init_data(int ac, char **av)
 		data->num_meals = ft_atol(av[5]);
 	else
 		data->num_meals = -1;
+	data->end_flag = 0;
 	data->philo = malloc(sizeof(t_philo) * data->num_philos);
 	data->forks = malloc(sizeof(pthread_mutex_t) * data->num_philos);
 	data->message_mutex = malloc(sizeof(pthread_mutex_t));
