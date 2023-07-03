@@ -6,7 +6,7 @@
 /*   By: andrefrancisco <andrefrancisco@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 21:36:23 by abaiao-r          #+#    #+#             */
-/*   Updated: 2023/07/03 18:29:21 by andrefranci      ###   ########.fr       */
+/*   Updated: 2023/07/03 19:10:41 by andrefranci      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,18 @@ void singular_philo(t_philo *philo)
 		}
 	}
 }
+
+/* void check_end(t_philo *philo)
+{
+	pthread_mutex_lock(philo->data->end_flag_mutex);
+	if (philo->data->end_flag == 1)
+	{
+		pthread_mutex_unlock(philo->data->end_flag_mutex);
+		return (1);
+	}
+	pthread_mutex_unlock(philo->data->end_flag_mutex);
+	return (0);
+} */
 
 void *routine(void *arg)
 {

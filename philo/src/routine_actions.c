@@ -6,7 +6,7 @@
 /*   By: andrefrancisco <andrefrancisco@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 18:23:39 by andrefranci       #+#    #+#             */
-/*   Updated: 2023/07/03 18:33:51 by andrefranci      ###   ########.fr       */
+/*   Updated: 2023/07/03 20:09:24 by andrefranci      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,13 @@ void	thinking(t_philo *philo)
 {
 	time_t	time_to_think;
 
-	time_to_think = (philo->data->time_to_die - (get_timestamp(philo->last_meal)
-				- philo->data->time_to_eat)) / 2;
+	time_to_think = philo->data->time_to_die - philo->data->time_to_eat
+		- philo->data->time_to_sleep;
 	if (time_to_think < 0)
 		time_to_think = 0;
 	if (time_to_think == 0)
 		time_to_think = 1;
-	if (time_to_think > 600)
+	if (time_to_think > 200)
 		time_to_think = 200;
 	print_message(philo, "is thinking");
 	usleep(time_to_think * 1000);
@@ -62,8 +62,8 @@ void	update_meals(t_philo *philo)
 
 void	eating(t_philo *philo)
 {
-	print_message(philo, "is eating");
 	update_meals(philo);
+	print_message(philo, "is eating");
 	usleep(philo->data->time_to_eat * 1000);
 	pthread_mutex_unlock(philo->left_fork);
 	pthread_mutex_unlock(philo->right_fork);

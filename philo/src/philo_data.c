@@ -6,12 +6,11 @@
 /*   By: andrefrancisco <andrefrancisco@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 21:57:45 by andrefranci       #+#    #+#             */
-/*   Updated: 2023/07/03 18:35:11 by andrefranci      ###   ########.fr       */
+/*   Updated: 2023/07/03 20:05:19 by andrefranci      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
-
 
 int	create_forks(t_data **data)
 {

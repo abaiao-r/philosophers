@@ -6,7 +6,7 @@
 /*   By: andrefrancisco <andrefrancisco@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 18:19:46 by andrefranci       #+#    #+#             */
-/*   Updated: 2023/07/03 18:34:32 by andrefranci      ###   ########.fr       */
+/*   Updated: 2023/07/03 19:31:18 by andrefranci      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@ int	check_life(t_philo *philo)
 	{
 		philo->data->end_flag = 1;
 		printf("%ld philosopher %d has died\n",
-			get_timestamp(philo->data->start_time), philo->philo_id_num);
+				get_timestamp(philo->data->start_time),
+				philo->philo_id_num);
 		pthread_mutex_unlock(philo->data->death_mutex);
 		return (0);
 	}
@@ -31,9 +32,15 @@ int	check_life(t_philo *philo)
 
 void	print_message(t_philo *philo, char *message)
 {
+
 	pthread_mutex_lock(philo->data->message_mutex);
-	printf("%ld philosopher %d %s\n", get_timestamp(philo->data->start_time),
-		philo->philo_id_num, message);
+	pthread_mutex_lock(philo->data->end_flag_mutex);
+	if (philo->data->end_flag == 0)
+	{
+		printf("%ld philosopher %d %s\n", get_timestamp(philo->data->start_time),
+			philo->philo_id_num, message);
+	}
+	pthread_mutex_unlock(philo->data->end_flag_mutex);
 	pthread_mutex_unlock(philo->data->message_mutex);
 }
 
