@@ -6,7 +6,7 @@
 /*   By: andrefrancisco <andrefrancisco@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 21:29:58 by abaiao-r          #+#    #+#             */
-/*   Updated: 2023/07/01 01:10:26 by andrefranci      ###   ########.fr       */
+/*   Updated: 2023/07/03 18:36:26 by andrefranci      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ void	destroy_forks(pthread_mutex_t *forks, int num_forks)
 		i++;
 	}
 }
+
 
 void	cleanup(t_data *data)
 {

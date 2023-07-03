@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: abaiao-r <abaiao-r@student.42.fr>          +#+  +:+       +#+         #
+#    By: andrefrancisco <andrefrancisco@student.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/12 14:04:06 by codespace         #+#    #+#              #
-#    Updated: 2023/06/29 18:25:16 by abaiao-r         ###   ########.fr        #
+#    Updated: 2023/07/03 18:29:58 by andrefranci      ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,6 +25,8 @@ SRCS = 	$(SRCDIR)/main.c \
 		$(SRCDIR)/free_resources.c \
 		$(SRCDIR)/philo_data.c \
 		$(SRCDIR)/routine.c \
+		$(SRCDIR)/routine_actions.c \
+		$(SRCDIR)/routine_utils.c \
 		$(SRCDIR)/utils.c \
 
 

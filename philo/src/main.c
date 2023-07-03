@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abaiao-r <abaiao-r@student.42.fr>          +#+  +:+       +#+        */
+/*   By: andrefrancisco <andrefrancisco@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 15:17:25 by codespace         #+#    #+#             */
-/*   Updated: 2023/06/29 15:35:18 by abaiao-r         ###   ########.fr       */
+/*   Updated: 2023/07/03 18:36:07 by andrefranci      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 int	main(int ac, char **av)
 {
-	t_data		*data;
-	int i;
+	t_data	*data;
+	int		i;
 
 	data = NULL;
 	if (!arg_check(ac, av))
@@ -33,12 +33,6 @@ int	main(int ac, char **av)
 		cleanup(data);
 		return (1);
 	}
-/* 	if (!create_mutexes(&data))
-	{
-		printf("Failed to initialize mutexes.\n");
-		cleanup(data);
-		return (1);
-	} */
 	if (!create_philosophers(&data))
 	{
 		printf("Failed to create philosopher threads.\n");

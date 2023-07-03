@@ -6,7 +6,7 @@
 /*   By: andrefrancisco <andrefrancisco@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 14:12:41 by codespace         #+#    #+#             */
-/*   Updated: 2023/07/01 00:56:00 by andrefranci      ###   ########.fr       */
+/*   Updated: 2023/07/03 18:30:48 by andrefranci      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ typedef struct s_data
 	pthread_mutex_t	*forks;
 	pthread_mutex_t	*message_mutex;
 	pthread_mutex_t	*death_mutex;
+	pthread_mutex_t	*end_flag_mutex;
 	time_t			start_time;
 }					t_data;
 
@@ -68,9 +69,19 @@ int					create_philosophers(t_data **data);
 t_data				*init_data(int ac, char **av);
 
 /* routine.c */
-void				wait_for_all_threads(t_data *data);
-time_t				get_timestamp(time_t start_time);
 void				*routine(void *arg);
+
+/* routine_actions */
+void				thinking(t_philo *philo);
+void				take_forks(t_philo *philo);
+void				update_meals(t_philo *philo);
+void				eating(t_philo *philo);
+void				sleeping(t_philo *philo);
+
+/* routine_utils.c */
+int					check_life(t_philo *philo);
+void				print_message(t_philo *philo, char *message);
+time_t				get_timestamp(time_t start_time);
 
 /* utils.c */
 int					ft_isdigit(char c);
