@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   routine_actions.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: andrefrancisco <andrefrancisco@student.    +#+  +:+       +#+        */
+/*   By: abaiao-r <abaiao-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 18:23:39 by andrefranci       #+#    #+#             */
-/*   Updated: 2023/07/03 20:09:24 by andrefranci      ###   ########.fr       */
+/*   Updated: 2023/07/04 16:15:06 by abaiao-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,12 @@ void	thinking(t_philo *philo)
 {
 	time_t	time_to_think;
 
-	time_to_think = philo->data->time_to_die - philo->data->time_to_eat
-		- philo->data->time_to_sleep;
+	time_to_think = philo->data->time_to_die - (get_timestamp(philo->last_meal) - philo->data->time_to_eat) / 2;
 	if (time_to_think < 0)
 		time_to_think = 0;
 	if (time_to_think == 0)
 		time_to_think = 1;
-	if (time_to_think > 200)
+	if (time_to_think > 600)
 		time_to_think = 200;
 	print_message(philo, "is thinking");
 	usleep(time_to_think * 1000);
@@ -56,8 +55,10 @@ void	update_meals(t_philo *philo)
 {
 	pthread_mutex_lock(philo->data->death_mutex);
 	philo->last_meal = get_timestamp(philo->data->start_time);
-	philo->meals_eaten++;
 	pthread_mutex_unlock(philo->data->death_mutex);
+	pthread_mutex_lock(philo->data->meals_eaten_mutex);
+	philo->meals_eaten++;
+	pthread_mutex_unlock(philo->data->meals_eaten_mutex);
 }
 
 void	eating(t_philo *philo)

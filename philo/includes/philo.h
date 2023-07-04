@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: andrefrancisco <andrefrancisco@student.    +#+  +:+       +#+        */
+/*   By: abaiao-r <abaiao-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 14:12:41 by codespace         #+#    #+#             */
-/*   Updated: 2023/07/03 18:30:48 by andrefranci      ###   ########.fr       */
+/*   Updated: 2023/07/04 16:15:16 by abaiao-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ typedef struct s_philo
 	time_t			last_meal;
 	pthread_mutex_t	*left_fork;
 	pthread_mutex_t	*right_fork;
-	pthread_mutex_t	*last_meal_mutex;
+	//pthread_mutex_t	*last_meal_mutex;
 	struct s_data	*data;
 }					t_philo;
 
@@ -48,6 +48,7 @@ typedef struct s_data
 	pthread_mutex_t	*message_mutex;
 	pthread_mutex_t	*death_mutex;
 	pthread_mutex_t	*end_flag_mutex;
+	pthread_mutex_t	*meals_eaten_mutex;
 	time_t			start_time;
 }					t_data;
 
@@ -55,7 +56,7 @@ typedef struct s_data
 int					arg_check(int ac, char **av);
 
 /* free_resources.c */
-void				destroy_mutexes(pthread_mutex_t *mutexes,
+void	destroy_mutexes(pthread_mutex_t *mutexes,
 						int num_mutexes);
 void				destroy_forks(pthread_mutex_t *forks, int num_forks);
 void				cleanup(t_data *data);
@@ -69,6 +70,8 @@ int					create_philosophers(t_data **data);
 t_data				*init_data(int ac, char **av);
 
 /* routine.c */
+
+void				overwatch(t_data *data);
 void				*routine(void *arg);
 
 /* routine_actions */
@@ -79,7 +82,9 @@ void				eating(t_philo *philo);
 void				sleeping(t_philo *philo);
 
 /* routine_utils.c */
-int					check_life(t_philo *philo);
+void				singular_philo(t_philo *philo);
+int					check_life(t_data *data);
+int					check_end(t_philo *philo);
 void				print_message(t_philo *philo, char *message);
 time_t				get_timestamp(time_t start_time);
 

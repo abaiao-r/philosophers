@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo_data.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: andrefrancisco <andrefrancisco@student.    +#+  +:+       +#+        */
+/*   By: abaiao-r <abaiao-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 21:57:45 by andrefranci       #+#    #+#             */
-/*   Updated: 2023/07/03 20:05:19 by andrefranci      ###   ########.fr       */
+/*   Updated: 2023/07/04 16:15:35 by abaiao-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,9 @@ void	assign_forks(t_philo *philo)
 	printf("Philosopher %d right fork: %p\n", philo->philo_id_num, philo->right_fork);
 }
 
+
+
+
 int	create_philosophers(t_data **data)
 {
 	int	i;
@@ -64,7 +67,7 @@ int	create_philosophers(t_data **data)
 	{
 		(*data)->philo[i].philo_id_num = i + 1;
 		(*data)->philo[i].meals_eaten = 0;
-		(*data)->philo[i].last_meal = 0;
+		(*data)->philo[i].last_meal = (*data)->start_time;
 		(*data)->philo[i].data = *data;
 		assign_forks(&((*data)->philo[i]));
 		if (pthread_create(&(*data)->philo[i].philo_id, NULL, routine,
@@ -76,6 +79,8 @@ int	create_philosophers(t_data **data)
 		i++;
 		usleep(900);
 	}
+	if((*data)->num_philos > 1)
+		overwatch(*data);
 	return (1);
 }
 
@@ -107,9 +112,10 @@ t_data	*init_data(int ac, char **av)
 	data->message_mutex = malloc(sizeof(pthread_mutex_t));
 	data->death_mutex = malloc(sizeof(pthread_mutex_t));
 	data->end_flag_mutex = malloc(sizeof(pthread_mutex_t));
+	data->meals_eaten_mutex = malloc(sizeof(pthread_mutex_t));
 	pthread_mutex_init(data->message_mutex, NULL);
 	pthread_mutex_init(data->death_mutex, NULL);
 	pthread_mutex_init(data->end_flag_mutex, NULL);
-	data->start_time = start_watch();
+	pthread_mutex_init(data->meals_eaten_mutex, NULL);
 	return (data);
 }
