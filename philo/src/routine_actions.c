@@ -6,7 +6,7 @@
 /*   By: abaiao-r <abaiao-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 18:23:39 by andrefranci       #+#    #+#             */
-/*   Updated: 2023/07/04 16:15:06 by abaiao-r         ###   ########.fr       */
+/*   Updated: 2023/07/04 18:40:23 by abaiao-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,8 @@ void	take_forks(t_philo *philo)
 	{
 		pthread_mutex_lock(philo->left_fork);
 		print_message(philo, "has taken a fork");
-		pthread_mutex_lock(philo->right_fork);
+		if(pthread_mutex_lock(philo->right_fork) != 0)
+			printf("Error: Failed to lock mutex\n");	
 		print_message(philo, "has taken a fork");
 	}
 }

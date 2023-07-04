@@ -6,7 +6,7 @@
 /*   By: abaiao-r <abaiao-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 21:57:45 by andrefranci       #+#    #+#             */
-/*   Updated: 2023/07/04 16:15:35 by abaiao-r         ###   ########.fr       */
+/*   Updated: 2023/07/04 18:33:51 by abaiao-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,8 @@ void	assign_forks(t_philo *philo)
 	{
 		philo->left_fork = &philo->data->forks[0];
 		philo->right_fork = &philo->data->forks[0];
-		printf("Philosopher %d left fork: %p\n", philo->philo_id_num, philo->left_fork);
-		printf("Philosopher %d right fork: %p\n", philo->philo_id_num, philo->right_fork);
+		/* printf("Philosopher %d left fork: %p\n", philo->philo_id_num, philo->left_fork);
+		printf("Philosopher %d right fork: %p\n", philo->philo_id_num, philo->right_fork); */
 		return ;
 	}
 	if (philo->philo_id_num == 1)
@@ -50,8 +50,8 @@ void	assign_forks(t_philo *philo)
 		philo->left_fork = &philo->data->forks[philo->philo_id_num];
 		philo->right_fork = &philo->data->forks[philo->philo_id_num - 1];
 	}
-	printf("Philosopher %d left fork: %p\n", philo->philo_id_num, philo->left_fork);
-	printf("Philosopher %d right fork: %p\n", philo->philo_id_num, philo->right_fork);
+/* 	printf("Philosopher %d left fork: %p\n", philo->philo_id_num, philo->left_fork);
+	printf("Philosopher %d right fork: %p\n", philo->philo_id_num, philo->right_fork); */
 }
 
 

@@ -3,16 +3,16 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: andrefrancisco <andrefrancisco@student.    +#+  +:+       +#+         #
+#    By: abaiao-r <abaiao-r@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/12 14:04:06 by codespace         #+#    #+#              #
-#    Updated: 2023/07/03 18:29:58 by andrefranci      ###   ########.fr        #
+#    Updated: 2023/07/04 18:34:32 by abaiao-r         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 # Compiler settings
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -g -fsanitize=thread
+CFLAGS = -Wall -Wextra -Werror -g #-fsanitize=thread
 
 # Directories
 SRCDIR = ./src
@@ -55,8 +55,11 @@ lldb:	all
 gdb:	all
 		gdb $(NAME)
 
-valgrind: 	all
-			valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --tool=drd --tool=helgrind ./$(NAME)
+valgrind_drd: 	all
+			valgrind --tool=drd ./$(NAME) $(ARGS)
+
+valgrind_helgrind: 	all
+					valgrind --tool=helgrind ./$(NAME) $(ARGS)
 
 $(NAME): 	$(OBJS)
 			$(CC) $(OBJS) $(CFLAGS) -pthread -o  $(NAME) 
