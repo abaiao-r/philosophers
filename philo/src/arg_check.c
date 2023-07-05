@@ -6,12 +6,18 @@
 /*   By: abaiao-r <abaiao-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 20:50:01 by andrefranci       #+#    #+#             */
-/*   Updated: 2023/07/05 18:34:46 by abaiao-r         ###   ########.fr       */
+/*   Updated: 2023/07/05 18:46:21 by abaiao-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
 
+/* ac_check: checks if the number of arguments is correct
+ * the number of arguments must be 5 or 6
+ * if the number of arguments is not correct, it prints the usage
+ * and returns 0
+ * if the number of arguments is correct, it returns 1
+ */
 static int	ac_check(int ac, char **av)
 {
 	if (ac < 5 || ac > 6)
@@ -25,6 +31,12 @@ static int	ac_check(int ac, char **av)
 	return (1);
 }
 
+/* is_negative: checks if the arguments are negative
+ * by comparing the arguments with the minus sign
+ * if the arguments are negative, it prints the usage
+ * and returns 1
+ * if the arguments are not negative, it returns 0
+ */
 static int	is_negative(char *str)
 {
 	if (str[0] == '-')
@@ -35,6 +47,12 @@ static int	is_negative(char *str)
 	return (0);
 }
 
+/*  is_not_digit: checks if the arguments are not digits 
+ *  by comparing the arguments with the digits from 0 to 9
+ *  if the arguments are not digits, it prints the usage
+ * and returns 1
+ * if the arguments are digits, it returns 0
+ */
 static int	is_not_digit(char *str)
 {
 	int	j;
@@ -52,6 +70,15 @@ static int	is_not_digit(char *str)
 	return (0);
 }
 
+/* is_too_large: checks if the arguments are bigger than an int
+ * by comparing the length of the arguments with the length of the
+ * maximum value of an int
+ * also checks if the arguments are bigger than the maximum value of an int
+ * by comparing the arguments with the maximum value of an int
+ * if the arguments are bigger than an int, it prints the usage
+ * and returns 1
+ * if the arguments are not bigger than an int, it returns 0
+ */
 static int	is_too_large(char *str)
 {
 	int	len_str;
@@ -74,7 +101,8 @@ static int	is_too_large(char *str)
  * is_negative: checks if the arguments are negative
  * is_not_digit: checks if the arguments are not digits
  * is_too_large: checks if the arguments are bigger than an int
- * arg_check: calls all the functions above
+ * arg_check: calls all the functions above and checks if av[1] is
+ * between 1 and 500 (the number of philosophers must be between 1 and 500)
  */
 int	arg_check(int ac, char **av)
 {

@@ -6,12 +6,21 @@
 /*   By: abaiao-r <abaiao-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 15:17:25 by codespace         #+#    #+#             */
-/*   Updated: 2023/07/05 17:21:23 by abaiao-r         ###   ########.fr       */
+/*   Updated: 2023/07/05 19:48:11 by abaiao-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
 
+/* join_threads: joins the threads
+** pthread_join: waits for the thread to terminate
+** it iterates through the number of philosophers
+** it joins the thread
+** it returns 1 if the threads were joined successfully
+** it returns 0 if the threads were not joined successfully
+** is usefull to check if the threads were joined successfully
+** because if they were not joined successfully, the program will not end
+*/
 static int	join_threads(t_data *data)
 {
 	int	i;
@@ -29,6 +38,14 @@ static int	join_threads(t_data *data)
 	return (1);
 }
 
+/*  main: the main function
+**  it checks the arguments
+**  it initializes the data
+**  it creates the forks
+**  it creates the philosophers
+**  it joins the threads
+**  it cleans up the data
+*/
 int	main(int ac, char **av)
 {
 	t_data	*data;

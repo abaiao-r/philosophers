@@ -6,12 +6,19 @@
 /*   By: abaiao-r <abaiao-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 21:57:45 by andrefranci       #+#    #+#             */
-/*   Updated: 2023/07/05 18:26:28 by abaiao-r         ###   ########.fr       */
+/*   Updated: 2023/07/05 19:01:30 by abaiao-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
 
+
+/*  create_forks: creates the forks (mutexes)
+**  it iterates through the number of philosophers
+**  it initializes the forks
+**  it returns 1 if the forks were created successfully
+**  it returns 0 if the forks were not created successfully
+*/
 int	create_forks(t_data **data)
 {
 	int	i;
@@ -29,6 +36,13 @@ int	create_forks(t_data **data)
 	return (1);
 }
 
+/*  assign_forks: assigns the forks to the philosophers
+**  if the number of philosophers is 1, it assigns the same fork to both
+**  if the philosopher id number is odd, it assigns the left fork to the
+**  philosopher id number and the right fork to the philosopher id number + 1
+**  if the philosopher id number is even, it assigns the left fork to the
+**  philosopher id number + 1 and the right fork to the philosopher id number
+*/
 void	assign_forks(t_philo *philo)
 {
 	if (philo->data->num_philos == 1)
@@ -51,6 +65,18 @@ void	assign_forks(t_philo *philo)
 	}
 }
 
+/*  create_philosophers: creates the philosophers (threads)
+**  it iterates through the number of philosophers
+**  it assigns the values to the philosopher struct
+**  it assigns the forks to the philosopher struct
+**  it creates the philosopher thread
+**  it returns 1 if the thread was created successfully
+**  it returns 0 if the thread was not created successfully
+** usleep(900) is used to avoid the threads from being created at the same time
+** if the number of philosophers is greater than 1, it calls overwatch
+** overwatch is a function that checks if the philosophers are alive
+** if the philosophers are not alive, it ends the philosophers (threads)
+*/
 int	create_philosophers(t_data **data)
 {
 	int	i;
@@ -78,7 +104,10 @@ int	create_philosophers(t_data **data)
 	return (1);
 }
 
-/* start_watch  */
+/* start_watch: starts the timer
+** it gets the current time
+** it returns the current time in milliseconds
+*/
 time_t	start_watch(void)
 {
 	struct timeval	start_time;
@@ -87,6 +116,14 @@ time_t	start_watch(void)
 	return (start_time.tv_sec * 1000 + start_time.tv_usec / 1000);
 }
 
+/* init_data: initializes the data struct
+** it allocates memory for the data struct
+** it assigns the values from the arguments to the data struct
+** it allocates memory for the philo struct
+** it allocates memory for the forks
+** it initializes the mutexes
+** it returns the data struct
+*/
 t_data	*init_data(int ac, char **av)
 {
 	t_data	*data;
