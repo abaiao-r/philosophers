@@ -37,14 +37,14 @@ In conclusion, the Philosophers project provides a practical and engaging way to
 
 To run the program, follow these steps:
 
-1. Clone the repository: `git clone <repository-url>`
+1. Clone the repository: `git clone git@github.com:abaiao-r/philosophers.git`
 2. Navigate to the project directory: `cd Philosophers`
 3. Compile the program: `make`
 4. Run the program with appropriate arguments: `./philo <arguments>` You can find the documentation [here](/philosophers.pdf).
 
 ## Contributing
 
-As this project is intended to showcase my HTML skills, I am currently not accepting direct contributions. However, I am open to feedback and suggestions that could help improve the project. If you have any ideas or spot any issues, feel free to raise them as GitHub issues.
+As this project is intended to showcase my Threads and Mutexes skills, I am currently not accepting direct contributions. However, I am open to feedback and suggestions that could help improve the project. If you have any ideas or spot any issues, feel free to raise them as GitHub issues.
 
 ## License
 
