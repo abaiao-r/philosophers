@@ -6,12 +6,11 @@
 /*   By: abaiao-r <abaiao-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 21:57:45 by andrefranci       #+#    #+#             */
-/*   Updated: 2023/07/05 19:01:30 by abaiao-r         ###   ########.fr       */
+/*   Updated: 2023/07/05 19:56:05 by abaiao-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
-
 
 /*  create_forks: creates the forks (mutexes)
 **  it iterates through the number of philosophers
