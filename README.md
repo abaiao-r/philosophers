@@ -48,4 +48,4 @@ As this project is intended to showcase my Threads and Mutexes skills, I am curr
 
 ## License
 
-Odin-Recipes is released under the [MIT License](./LICENSE.txt).
+Philosophers is released under the [MIT License](./LICENSE.txt).
