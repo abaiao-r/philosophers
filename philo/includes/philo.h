@@ -6,7 +6,7 @@
 /*   By: abaiao-r <abaiao-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 14:12:41 by codespace         #+#    #+#             */
-/*   Updated: 2023/07/05 16:35:10 by abaiao-r         ###   ########.fr       */
+/*   Updated: 2023/07/05 18:36:00 by abaiao-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,9 +85,13 @@ void				print_message(t_philo *philo, char *message);
 time_t				get_timestamp(time_t start_time);
 
 /* utils.c */
+size_t				ft_strlen(const char *s);
 int					ft_isdigit(char c);
-long				ft_atol(const char *nptr);
+long long int		ft_atoll(const char *nptr);
 void				ft_bzero(void *s, size_t n);
 void				*ft_calloc(size_t nmemb, size_t size);
+
+/* utils_2.c */
+int					ft_strncmp(const char *s1, const char *s2, size_t n);
 
 #endif

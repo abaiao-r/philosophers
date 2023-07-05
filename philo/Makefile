@@ -6,7 +6,7 @@
 #    By: abaiao-r <abaiao-r@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/12 14:04:06 by codespace         #+#    #+#              #
-#    Updated: 2023/07/05 14:47:31 by abaiao-r         ###   ########.fr        #
+#    Updated: 2023/07/05 18:35:42 by abaiao-r         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,6 +28,7 @@ SRCS = 	$(SRCDIR)/main.c \
 		$(SRCDIR)/routine_actions.c \
 		$(SRCDIR)/routine_utils.c \
 		$(SRCDIR)/utils.c \
+		$(SRCDIR)/utils_2.c
 
 
 OBJS = $(SRCS:$(SRCDIR)/%.c=$(OBJDIR)/%.o)

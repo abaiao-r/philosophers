@@ -6,11 +6,21 @@
 /*   By: abaiao-r <abaiao-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 21:07:08 by andrefranci       #+#    #+#             */
-/*   Updated: 2023/07/05 16:34:25 by abaiao-r         ###   ########.fr       */
+/*   Updated: 2023/07/05 18:36:12 by abaiao-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
+
+size_t	ft_strlen(const char *s)
+{
+	size_t	i;
+
+	i = 0;
+	while (s[i] != '\0')
+		i++;
+	return (i);
+}
 
 int	ft_isdigit(char c)
 {
@@ -20,11 +30,11 @@ int	ft_isdigit(char c)
 		return (0);
 }
 
-long	ft_atol(const char *nptr)
+long long int	ft_atoll(const char *nptr)
 {
-	long	i;
-	int		sign;
-	int		result;
+	long long int	i;
+	int				sign;
+	int				result;
 
 	i = 0;
 	sign = 1;

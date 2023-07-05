@@ -6,7 +6,7 @@
 /*   By: abaiao-r <abaiao-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 21:57:45 by andrefranci       #+#    #+#             */
-/*   Updated: 2023/07/05 16:03:39 by abaiao-r         ###   ########.fr       */
+/*   Updated: 2023/07/05 18:26:28 by abaiao-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,12 +92,12 @@ t_data	*init_data(int ac, char **av)
 	t_data	*data;
 
 	data = malloc(sizeof(t_data));
-	data->num_philos = ft_atol(av[1]);
-	data->time_to_die = ft_atol(av[2]);
-	data->time_to_eat = ft_atol(av[3]);
-	data->time_to_sleep = ft_atol(av[4]);
+	data->num_philos = ft_atoll(av[1]);
+	data->time_to_die = ft_atoll(av[2]);
+	data->time_to_eat = ft_atoll(av[3]);
+	data->time_to_sleep = ft_atoll(av[4]);
 	if (ac == 6)
-		data->num_meals = ft_atol(av[5]);
+		data->num_meals = ft_atoll(av[5]);
 	else
 		data->num_meals = -1;
 	data->end_flag = 0;

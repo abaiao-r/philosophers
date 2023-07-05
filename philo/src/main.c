@@ -6,7 +6,7 @@
 /*   By: abaiao-r <abaiao-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 15:17:25 by codespace         #+#    #+#             */
-/*   Updated: 2023/07/05 16:34:13 by abaiao-r         ###   ########.fr       */
+/*   Updated: 2023/07/05 17:21:23 by abaiao-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,11 @@ int	main(int ac, char **av)
 		return (0);
 	data = init_data(ac, av);
 	if (!data)
+	{
+		printf("Error: Failed to initialize data\n");
 		cleanup(data);
+		return (0);
+	}
 	if (!create_forks(&data))
 		cleanup(data);
 	if (!create_philosophers(&data))
