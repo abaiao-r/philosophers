@@ -6,7 +6,7 @@
 /*   By: abaiao-r <abaiao-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 18:19:46 by andrefranci       #+#    #+#             */
-/*   Updated: 2023/07/04 16:02:32 by abaiao-r         ###   ########.fr       */
+/*   Updated: 2023/07/05 14:21:03 by abaiao-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void	print_message(t_philo *philo, char *message)
 		return ;
 	pthread_mutex_lock(philo->data->message_mutex);
 	printf("%ld philosopher %d %s\n", get_timestamp(philo->data->start_time),
-			philo->philo_id_num, message);
+			philo->philo_id_num + 1, message);
 	pthread_mutex_unlock(philo->data->message_mutex);
 }
 

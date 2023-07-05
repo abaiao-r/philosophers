@@ -6,7 +6,7 @@
 /*   By: abaiao-r <abaiao-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 18:23:39 by andrefranci       #+#    #+#             */
-/*   Updated: 2023/07/04 18:40:23 by abaiao-r         ###   ########.fr       */
+/*   Updated: 2023/07/05 14:32:13 by abaiao-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,21 +35,30 @@ void	take_forks(t_philo *philo)
 		print_message(philo, "has taken a fork");
 		return ;
 	}
-	if (philo->philo_id_num % 2 == 0)
+	if(pthread_mutex_lock(philo->left_fork) != 0)
+		print_message(philo, "left fork mutex lock failed");
+	print_message(philo, "has taken a fork");
+	if(pthread_mutex_lock(philo->right_fork) != 0)
+		print_message(philo, "right fork mutex lock failed");
+	print_message(philo, "has taken a fork");
+	/* if (philo->philo_id_num % 2 == 0)
 	{
-		pthread_mutex_lock(philo->right_fork);
+		if(pthread_mutex_lock(philo->right_fork) != 0)
+			print_message(philo, "right fork mutex lock failed");
 		print_message(philo, "has taken a fork");
-		pthread_mutex_lock(philo->left_fork);
+		if(pthread_mutex_lock(philo->left_fork) != 0)
+			print_message(philo, "left fork mutex lock failed");
 		print_message(philo, "has taken a fork");
 	}
 	else
 	{
-		pthread_mutex_lock(philo->left_fork);
+		if(pthread_mutex_lock(philo->left_fork) != 0)
+			print_message(philo, "left fork mutex lock failed");
 		print_message(philo, "has taken a fork");
 		if(pthread_mutex_lock(philo->right_fork) != 0)
-			printf("Error: Failed to lock mutex\n");	
+			print_message(philo, "right fork mutex lock failed");
 		print_message(philo, "has taken a fork");
-	}
+	} */
 }
 
 void	update_meals(t_philo *philo)
@@ -67,8 +76,18 @@ void	eating(t_philo *philo)
 	update_meals(philo);
 	print_message(philo, "is eating");
 	usleep(philo->data->time_to_eat * 1000);
-	pthread_mutex_unlock(philo->left_fork);
-	pthread_mutex_unlock(philo->right_fork);
+	if (philo->philo_id_num % 2 == 0)
+	{
+		pthread_mutex_unlock(philo->left_fork);
+		pthread_mutex_unlock(philo->right_fork);
+	}
+	else
+	{
+		pthread_mutex_unlock(philo->right_fork);
+		pthread_mutex_unlock(philo->left_fork);
+	}
+	/* pthread_mutex_unlock(philo->left_fork);
+	pthread_mutex_unlock(philo->right_fork); */
 }
 
 void	sleeping(t_philo *philo)

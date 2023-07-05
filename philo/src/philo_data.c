@@ -6,7 +6,7 @@
 /*   By: abaiao-r <abaiao-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 21:57:45 by andrefranci       #+#    #+#             */
-/*   Updated: 2023/07/04 18:33:51 by abaiao-r         ###   ########.fr       */
+/*   Updated: 2023/07/05 14:24:55 by abaiao-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	create_forks(t_data **data)
 			printf("Error: Failed to initialize fork mutex\n");
 			return (0);
 		}
-		printf("Fork %d initialized\n", i + 1);
+/* 		printf("Fork %d initialized\n", i + 1); */
 		i++;
 	}
 	return (1);
@@ -32,15 +32,26 @@ int	create_forks(t_data **data)
 
 void	assign_forks(t_philo *philo)
 {
-	if (philo->data->num_philos == 1)
+ 	if (philo->data->num_philos == 1)
 	{
 		philo->left_fork = &philo->data->forks[0];
 		philo->right_fork = &philo->data->forks[0];
-		/* printf("Philosopher %d left fork: %p\n", philo->philo_id_num, philo->left_fork);
-		printf("Philosopher %d right fork: %p\n", philo->philo_id_num, philo->right_fork); */
+		printf("Philosopher %d left fork: %p\n", philo->philo_id_num + 1, philo->left_fork);
+		printf("Philosopher %d right fork: %p\n", philo->philo_id_num + 1, philo->right_fork);
 		return ;
+	} 
+	if(philo->philo_id_num % 2)
+	{
+		philo->left_fork = &philo->data->forks[philo->philo_id_num];
+		philo->right_fork = &philo->data->forks[(philo->philo_id_num + 1) % philo->data->num_philos];
 	}
-	if (philo->philo_id_num == 1)
+	else
+	{
+		philo->left_fork = &philo->data->forks[(philo->philo_id_num + 1) % philo->data->num_philos];
+		philo->right_fork = &philo->data->forks[philo->philo_id_num];
+	}
+
+	/* if (philo->philo_id_num == 1)
 	{
 		philo->left_fork = &philo->data->forks[philo->philo_id_num];
 		philo->right_fork = &philo->data->forks[philo->data->num_philos];
@@ -49,9 +60,9 @@ void	assign_forks(t_philo *philo)
 	{
 		philo->left_fork = &philo->data->forks[philo->philo_id_num];
 		philo->right_fork = &philo->data->forks[philo->philo_id_num - 1];
-	}
-/* 	printf("Philosopher %d left fork: %p\n", philo->philo_id_num, philo->left_fork);
-	printf("Philosopher %d right fork: %p\n", philo->philo_id_num, philo->right_fork); */
+	} */
+/* 	printf("Philosopher %d left fork: %p\n", philo->philo_id_num + 1, philo->left_fork);
+	printf("Philosopher %d right fork: %p\n", philo->philo_id_num + 1, philo->right_fork); */
 }
 
 
@@ -65,7 +76,7 @@ int	create_philosophers(t_data **data)
 	(*data)->start_time = start_watch() + ((*data)->num_philos * 2);
 	while (i < (*data)->num_philos)
 	{
-		(*data)->philo[i].philo_id_num = i + 1;
+		(*data)->philo[i].philo_id_num = i;
 		(*data)->philo[i].meals_eaten = 0;
 		(*data)->philo[i].last_meal = (*data)->start_time;
 		(*data)->philo[i].data = *data;
@@ -79,7 +90,7 @@ int	create_philosophers(t_data **data)
 		i++;
 		usleep(900);
 	}
-	if((*data)->num_philos > 1)
+	if ((*data)->num_philos > 1)
 		overwatch(*data);
 	return (1);
 }

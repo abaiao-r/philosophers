@@ -6,13 +6,14 @@
 /*   By: abaiao-r <abaiao-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 14:12:41 by codespace         #+#    #+#             */
-/*   Updated: 2023/07/04 16:15:16 by abaiao-r         ###   ########.fr       */
+/*   Updated: 2023/07/04 20:36:11 by abaiao-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PHILO_H
 # define PHILO_H
 
+# include <errno.h>
 # include <limits.h>
 # include <pthread.h>
 # include <stdio.h>
