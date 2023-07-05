@@ -3,48 +3,48 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: andrefrancisco <andrefrancisco@student.    +#+  +:+       +#+        */
+/*   By: abaiao-r <abaiao-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 15:17:25 by codespace         #+#    #+#             */
-/*   Updated: 2023/07/03 18:36:07 by andrefranci      ###   ########.fr       */
+/*   Updated: 2023/07/05 16:34:13 by abaiao-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
 
+static int	join_threads(t_data *data)
+{
+	int	i;
+
+	i = 0;
+	while (i < data->num_philos)
+	{
+		if (pthread_join((data->philo[i].philo_id), NULL) != 0)
+		{
+			printf("Error: Failed to join threads\n");
+			return (0);
+		}
+		i++;
+	}
+	return (1);
+}
+
 int	main(int ac, char **av)
 {
 	t_data	*data;
-	int		i;
 
 	data = NULL;
 	if (!arg_check(ac, av))
 		return (0);
 	data = init_data(ac, av);
 	if (!data)
-	{
-		printf("Error: Memory allocation failed\n");
 		cleanup(data);
-		return (1);
-	}
 	if (!create_forks(&data))
-	{
-		printf("Failed to initialize mutexes.\n");
 		cleanup(data);
-		return (1);
-	}
 	if (!create_philosophers(&data))
-	{
-		printf("Failed to create philosopher threads.\n");
 		cleanup(data);
-		return (1);
-	}
-	i = 0;
-	while (i < data->num_philos)
-	{
-		pthread_join((data->philo[i].philo_id), NULL);
-		i++;
-	}
+	if (!join_threads(data))
+		cleanup(data);
 	cleanup(data);
 	return (0);
 }

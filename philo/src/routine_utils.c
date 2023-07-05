@@ -6,7 +6,7 @@
 /*   By: abaiao-r <abaiao-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 18:19:46 by andrefranci       #+#    #+#             */
-/*   Updated: 2023/07/05 14:21:03 by abaiao-r         ###   ########.fr       */
+/*   Updated: 2023/07/05 14:54:06 by abaiao-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	check_life(t_data *data)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (i < data->num_philos)
@@ -36,7 +36,7 @@ int	check_life(t_data *data)
 	return (1);
 }
 
-int check_end(t_philo *philo)
+int	check_end(t_philo *philo)
 {
 	pthread_mutex_lock(philo->data->end_flag_mutex);
 	if (philo->data->end_flag == 1)
@@ -53,8 +53,8 @@ void	print_message(t_philo *philo, char *message)
 	if (check_end(philo) == 1)
 		return ;
 	pthread_mutex_lock(philo->data->message_mutex);
-	printf("%ld philosopher %d %s\n", get_timestamp(philo->data->start_time),
-			philo->philo_id_num + 1, message);
+	printf("%ld %d %s\n", get_timestamp(philo->data->start_time),
+		philo->philo_id_num + 1, message);
 	pthread_mutex_unlock(philo->data->message_mutex);
 }
 

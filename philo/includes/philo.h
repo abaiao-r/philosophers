@@ -6,7 +6,7 @@
 /*   By: abaiao-r <abaiao-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 14:12:41 by codespace         #+#    #+#             */
-/*   Updated: 2023/07/04 20:36:11 by abaiao-r         ###   ########.fr       */
+/*   Updated: 2023/07/05 16:35:10 by abaiao-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 # include <sys/time.h>
 # include <unistd.h>
 
-struct s_data;
+struct	s_data;
 
 typedef struct s_philo
 {
@@ -32,7 +32,6 @@ typedef struct s_philo
 	time_t			last_meal;
 	pthread_mutex_t	*left_fork;
 	pthread_mutex_t	*right_fork;
-	//pthread_mutex_t	*last_meal_mutex;
 	struct s_data	*data;
 }					t_philo;
 
@@ -57,13 +56,9 @@ typedef struct s_data
 int					arg_check(int ac, char **av);
 
 /* free_resources.c */
-void	destroy_mutexes(pthread_mutex_t *mutexes,
-						int num_mutexes);
-void				destroy_forks(pthread_mutex_t *forks, int num_forks);
 void				cleanup(t_data *data);
 
 /* philo_data.c */
-int					create_mutexes(t_data **data);
 int					create_forks(t_data **data);
 void				assign_forks(t_philo *philo);
 time_t				start_watch(void);

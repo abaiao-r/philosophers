@@ -6,13 +6,13 @@
 /*   By: abaiao-r <abaiao-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 21:36:23 by abaiao-r          #+#    #+#             */
-/*   Updated: 2023/07/04 22:40:32 by abaiao-r         ###   ########.fr       */
+/*   Updated: 2023/07/05 16:17:39 by abaiao-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
 
-void singular_philo(t_philo *philo)
+void	singular_philo(t_philo *philo)
 {
 	take_forks(philo);
 	usleep(philo->data->time_to_die * 1000);
@@ -20,51 +20,58 @@ void singular_philo(t_philo *philo)
 	print_message(philo, "has died");
 }
 
-void overwatch(t_data *data)
+static int	check_meals_full(t_data *data)
 {
-	int i;
-	int full;
+	int	i;
 
-	while(1)
+	i = 0;
+	while (i < data->num_philos)
+	{
+		pthread_mutex_lock(data->meals_eaten_mutex);
+		if (data->philo[i].meals_eaten < data->num_meals)
+		{
+			pthread_mutex_unlock(data->meals_eaten_mutex);
+			return (0);
+		}
+		pthread_mutex_unlock(data->meals_eaten_mutex);
+		i++;
+	}
+	return (1);
+}
+
+static void	set_end_flag(t_data *data)
+{
+	pthread_mutex_lock(data->end_flag_mutex);
+	data->end_flag = 1;
+	pthread_mutex_unlock(data->end_flag_mutex);
+}
+
+void	overwatch(t_data *data)
+{
+	while (1)
 	{
 		if (check_life(data) == 0)
-			break;
+			break ;
 		if (data->num_meals == -1)
-			continue;
-		i = 0;
-		full = 1;
-		while(i < data->num_philos)
+			continue ;
+		if (check_meals_full(data))
 		{
-			pthread_mutex_lock(data->meals_eaten_mutex);
-			if (data->philo[i].meals_eaten < data->num_meals)
-				full = 0;
-			pthread_mutex_unlock(data->meals_eaten_mutex);
-			//if (data->philo[i].meals_eaten >= data->num_meals)
-				//break;
-			i++;
+			set_end_flag(data);
+			break ;
 		}
-		if (full == 1)
-		{
-			pthread_mutex_lock(data->end_flag_mutex);
-			data->end_flag = 1;
-			pthread_mutex_unlock(data->end_flag_mutex);
-			break;
-		}
-
 	}
 }
 
-void *routine(void *arg)
+void	*routine(void *arg)
 {
-	t_philo *philo;
+	t_philo	*philo;
 	time_t	wait;
 
 	philo = (t_philo *)arg;
-	//printf("%ld philosopher %d was born!\n", get_timestamp(philo->data->start_time), philo->philo_id_num);
 	wait = (philo->data->start_time - start_watch()) * 1000;
 	if (wait > 0)
 		usleep(wait);
-	if(philo->data->num_philos == 1)
+	if (philo->data->num_philos == 1)
 	{
 		singular_philo(philo);
 		return (NULL);
@@ -73,37 +80,9 @@ void *routine(void *arg)
 		thinking(philo);
 	while (!check_end(philo))
 	{
-/* 		pthread_mutex_lock(philo->data->end_flag_mutex);
-		if(philo->data->end_flag == 1 || check_life(philo) == 0)
-		{
-			pthread_mutex_unlock(philo->data->end_flag_mutex);
-			break;
-		} */
 		take_forks(philo);
-		/* pthread_mutex_lock(philo->data->end_flag_mutex);
-		if(philo->data->end_flag == 1 || check_life(philo) == 0)
-		{
-			pthread_mutex_unlock(philo->left_fork);
-			pthread_mutex_unlock(philo->right_fork);
-			pthread_mutex_unlock(philo->data->end_flag_mutex);
-			break;
-		}  */
 		eating(philo);
-/* 		if (philo->data->num_meals != -1 && philo->meals_eaten >= philo->data->num_meals)
-			break; */
-/* 		pthread_mutex_lock(philo->data->end_flag_mutex);
-		if(philo->data->end_flag == 1 || check_life(philo) == 0)
-		{
-			pthread_mutex_unlock(philo->data->end_flag_mutex);
-			break;
-		} */
 		sleeping(philo);
-/* 		pthread_mutex_lock(philo->data->end_flag_mutex);
-		if(philo->data->end_flag == 1 || check_life(philo) == 0)
-		{
-			pthread_mutex_unlock(philo->data->end_flag_mutex);
-			break;
-		} */
 		thinking(philo);
 	}
 	return (NULL);
